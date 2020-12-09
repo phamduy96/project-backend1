@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/signup.css">
+	<script
+		src="https://code.jquery.com/jquery-3.5.1.js"
+		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+		crossorigin="anonymous">
+	</script>
+</head>
+<body>
+	<div class="container">
+		<div class="space"></div>
+		<div class="logo">
+		</div>
+		<div class="content">
+			<form>
+				<div>
+					<p>Nhập tên</p>
+					<input id="username" type="text" name="username" placeholder="Username">
+				</div>
+				<div>
+					<p>Nhập password</p>
+					<input id="password" type="password" name="password" placeholder="Password">
+				</div>
+				<div>
+					<p>Nhập email</p>
+					<input id="email" type="text" name="email" placeholder="Email">
+				</div>
+				<button id="btn" type="button">Sign up</button>
+			</form>
+		</div>
+	</div>
+</body>
+<script>
+	$('#btn').click(function(){
+		$.ajax({
+			url: 'user/addnew',
+			method: "POST",
+			data: {
+				username: $('#username').val(),
+				password: $('#password').val(),
+				email: $('#email').val(),
+			}
+		})
+		.then((res) => {
+			console.log(res);
+			alert(res.message);
+			window.location.href = '/admin'
+		})
+		.catch((err) => {
+			alert(err.responseJSON.message);
+		})
+	})
+</script>
+</html>

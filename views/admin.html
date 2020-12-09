@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/amin.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header_content">
+            <p class="text-header">A<span>D</span>M<span>I</span>N</p>
+            <ul>
+                <li id="addnew">Add New</li>
+                <li id="logout">Logout</li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div id="users" class="users">
+        </div>
+    </div>
+</body>
+
+<script>
+    $.ajax({
+        url: 'user/admin',
+        method: "GET"
+    })
+        .then((res) => {
+            if (res.status === 200) {
+                for (let i = 0; i < res.data.length; i++) {
+                    let element = res.data[i]
+                    template = `
+                    <div class="user"> 
+                        <h3>User ${[i]} </h3>
+                        <p>
+                            ID: <span class="spanid">${element._id}</span>
+                            <input class="edit-id d-none" value="${element._id}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Username: <span>${element.username}</span>
+                            <input class="edit-username d-none" value="${element.username}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Password: <span>${element.password}</span>
+                            <input class="edit-password d-none" value="${element.password}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Email: <span>${element.email}</span>
+                            <input class="edit-email d-none" value="${element.email}"></input>
+                        </p>
+                        <hr>
+                        <div class="select">
+                            <button class="saveuser d-none" data-id=${element._id}>Save</button>
+                            <button class="canceluser d-none">Cancel</button>
+                            <button class="edituser">Edit</button>
+                            <button class="deleteuser" data-id=${element._id}>Delete</button>
+                        </div>
+                    </div>
+                    `
+                    $("#users").append(template)
+                }
+                $('.edituser').click(function () {
+                    $(this).addClass('d-none')
+                    $(this).parent().find('.deleteuser').addClass('d-none')
+                    $(this).parent().find('.canceluser').removeClass('d-none')
+                    $(this).parent().find('.saveuser').removeClass('d-none')
+                    $(this).parent().parent().find('p').find('span').addClass('d-none')
+                    $(this).parent().parent().find('p').find('input').removeClass('d-none')
+                })
+                $('.deleteuser').click(function () {
+                    var id = $(this).attr('data-id')
+                    $.ajax({
+                        url: "/user/admin",
+                        method: "DELETE",
+                        data: {
+                            _id: id
+                        }
+                    })
+                        .then((res) => {
+                            alert(res.message)
+                            window.location.href = "/admin"
+                        })
+                })
+                $('.saveuser').click(function(){
+                    $.ajax({
+                        url: '/user/admin',
+                        method: "PUT",
+                        data: {
+                           Id: $(this).attr('data-id'),
+                           id: $(this).parent().parent().find('.edit-id').val(),
+                           username: $(this).parent().parent().find('.edit-username').val(),
+                           password: $(this).parent().parent().find('.edit-password').val(),
+                           email: $(this).parent().parent().find('.edit-email').val()
+                        }
+                    })
+                    .then((res) => {
+                        if(res.status === 200){
+                            alert(res.message)
+                            window.location.href = "/admin"
+                        }
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        alert(err.responseJSON.message)
+                    })
+                })
+                $('.canceluser').click(function(){
+                    $(this).addClass('d-none')
+                    $(this).parent().find('.deleteuser').removeClass('d-none')
+                    $(this).parent().find('.edituser').removeClass('d-none')
+                    $(this).parent().find('.saveuser').addClass('d-none')
+                    $(this).parent().parent().find('p').find('span').removeClass('d-none')
+                    $(this).parent().parent().find('p').find('input').addClass('d-none')
+                })
+            }
+        })
+        .catch((err) => {
+            alert(err)
+        });
+
+
+    $('#addnew').click(function () {
+        $.ajax({
+            url: '/user/admin',
+            method: "GET"
+        })
+            .then(() => {
+                window.location.href = "/addnew"
+            })
+    })
+    $('#logout').click(function () {
+        $.ajax({
+            url: '/user/admin',
+            method: "GET"
+        })
+            .then(() => {
+                window.location.href = "/"
+            })
+    })
+</script>
+
+</html>
