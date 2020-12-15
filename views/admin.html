@@ -28,7 +28,7 @@
 
 <script>
     $.ajax({
-        url: 'user/admin',
+        url: '/user',
         method: "GET"
     })
         .then((res) => {
@@ -79,7 +79,7 @@
                 $('.deleteuser').click(function () {
                     var id = $(this).attr('data-id')
                     $.ajax({
-                        url: "/user/admin",
+                        url: "/user/"+$(this).attr('data-id'),
                         method: "DELETE",
                         data: {
                             _id: id
@@ -92,11 +92,9 @@
                 })
                 $('.saveuser').click(function(){
                     $.ajax({
-                        url: '/user/admin',
+                        url: '/user/' + $(this).attr('data-id'),
                         method: "PUT",
                         data: {
-                           Id: $(this).attr('data-id'),
-                           id: $(this).parent().parent().find('.edit-id').val(),
                            username: $(this).parent().parent().find('.edit-username').val(),
                            password: $(this).parent().parent().find('.edit-password').val(),
                            email: $(this).parent().parent().find('.edit-email').val()
@@ -130,21 +128,21 @@
 
     $('#addnew').click(function () {
         $.ajax({
-            url: '/user/admin',
+            url: '/user',
             method: "GET"
         })
-            .then(() => {
-                window.location.href = "/addnew"
-            })
+        .then(() => {
+            window.location.href = "/addnew"
+        })
     })
     $('#logout').click(function () {
         $.ajax({
-            url: '/user/admin',
+            url: '/user',
             method: "GET"
         })
-            .then(() => {
-                window.location.href = "/"
-            })
+        .then(() => {
+            window.location.href = "/" 
+        })
     })
 </script>
 

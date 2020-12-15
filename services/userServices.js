@@ -27,14 +27,19 @@ UserServices.deleteUser = function(id){
         _id: id
     })
 }
-UserServices.update = function(user){
-    let {Id, id, username, password, email} = user
+UserServices.update = function(idParams,user){
+    let {username, password, email} = user
     return UserModel.updateOne({
-        _id: Id
+        _id: idParams
     },{
-        _id: id,
         username: username,
         password: password,
+        email: email
+    })
+}
+
+UserServices.checkEmail = function(email){
+    return UserModel.findOne({
         email: email
     })
 }
