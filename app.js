@@ -1,18 +1,20 @@
+var env = require('dotenv').config();
 var express = require('express');
 var app = express();
-const routerUser = require('./routers/user')
-const bodyParser = require('body-parser');
-const routerIndex = require('./routers/index');
-const path = require("path");
+var cookieParser = require('cookie-parser')
+app.use(cookieParser())
+const path = require('path');
+var jwt = require('jsonwebtoken');
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+var Userrouter = require('./routers/user')
+var Indexrouter = require('./routers/index')
 
+app.use('/user', Userrouter)
+app.use('/', Indexrouter)
 
-
-
-app.use('/user', routerUser)
-app.use('/', routerIndex)
-app.listen(3000, () => {
-    console.log('Tạo server thành công');
+app.listen(process.env.PORT, function(){
+    console.log('success');
 })

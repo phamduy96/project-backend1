@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" href="css/signup.css">
-	<script
-		src="https://code.jquery.com/jquery-3.5.1.js"
-		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-		crossorigin="anonymous">
-	</script>
+	<script src="https://code.jquery.com/jquery-3.5.1.js"
+		integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous">
+		</script>
 </head>
+
 <body>
 	<div class="container" style="height: 500px;">
 		<div class="space"></div>
@@ -26,13 +26,13 @@
 					<p>Nhập password</p>
 					<input id="password" type="password" name="password" placeholder="Password">
 				</div>
-				<button id="btn" type="button">Sign up</button>
+				<button id="btn" type="button">Login</button>
 			</form>
 		</div>
 	</div>
 </body>
 <script>
-	$('#btn').click(function(){
+	$('#btn').click(function () {
 		$.ajax({
 			url: '/user/login',
 			method: "POST",
@@ -42,13 +42,21 @@
 			}
 		})
 		.then((res) => {
-			if(res.status === 200){
-				window.location.href = '/admin'
+			if (res.status === 200) {
+				setCookie("token", res.data, 7)
+				window.location.href = '/'
 			}
 		})
 		.catch((err) => {
 			alert(err.responseJSON.message)
 		})
 	})
+	function setCookie(cname, cvalue, exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+		var expires = "expires=" + d.toUTCString();
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
 </script>
+
 </html>

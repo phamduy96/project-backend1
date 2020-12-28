@@ -47,23 +47,6 @@
             </nav>
         </div>
     </div>
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa tài khoản này</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">NO</button>
-                <button type="button" class="btn btn-primary delete">OK</button>
-            </div>
-            </div>
-        </div>
-    </div>
 </body>
 
 <script>
@@ -106,11 +89,7 @@
                             <button class="saveuser d-none button" data-id=${element._id}>Save</button>
                             <button class="canceluser d-none button">Cancel</button>
                             <button class="edituser button">Edit</button>
-                            
-                            <!-- Button trigger modal -->
-                            <button type="button" class="button deleteuser" data-id=${element._id} data-toggle="modal" data-target="#exampleModal">
-                            Delete 
-                            </button>
+                            <button class="deleteuser button" data-id=${element._id}>Delete</button>
                         </div>
                     </div>
                     `
@@ -125,22 +104,7 @@
                         $(this).parent().parent().find('p').find('input').removeClass('d-none')
                     })
                     $(".deleteuser").click(function () {
-                        var id = $(this).attr('data-id')
-                        $('.delete').click(function () {
-                            $.ajax({
-                                url: "/user/" + id,
-                                method: "DELETE",
-                                data: {
-                                    id: id
-                                }
-                            })
-                                .then((res) => {
-                                    window.location.href = "/"
-                                })
-                                .catch((err) => {
-                                    alert(err.message)
-                                })
-                        })
+                        alert("Bạn không phải admin")
                     })
                     $('.saveuser').click(function () {
                         $.ajax({
@@ -216,11 +180,7 @@
                             <button class="saveuser d-none button" data-id=${element._id}>Save</button>
                             <button class="canceluser d-none button">Cancel</button>
                             <button class="edituser button">Edit</button>
-                            
-                            <!-- Button trigger modal -->
-                            <button type="button" class="button deleteuser" data-id=${element._id} data-toggle="modal" data-target="#exampleModal">
-                            Delete 
-                            </button>
+                            <button class="deleteuser button" data-id=${element._id}>Delete</button>
                         </div>
                     </div>
                     `
@@ -235,22 +195,7 @@
                         $(this).parent().parent().find('p').find('input').removeClass('d-none')
                     })
                     $(".deleteuser").click(function () {
-                        var id = $(this).attr('data-id')
-                        $('.delete').click(function () {
-                            $.ajax({
-                                url: "/user/" + id,
-                                method: "DELETE",
-                                data: {
-                                    id: id
-                                }
-                            })
-                                .then((res) => {
-                                    window.location.href = "/"
-                                })
-                                .catch((err) => {
-                                    alert(err.message)
-                                })
-                        })
+                        alert("Bạn không phải admin")
                     })
                     $('.saveuser').click(function () {
                         $.ajax({
@@ -328,11 +273,7 @@
                             <button class="saveuser d-none button" data-id=${element._id}>Save</button>
                             <button class="canceluser d-none button">Cancel</button>
                             <button class="edituser button">Edit</button>
-                            
-                            <!-- Button trigger modal -->
-                            <button type="button" class="button deleteuser" data-id=${element._id} data-toggle="modal" data-target="#exampleModal">
-                            Delete 
-                            </button>
+                            <button class="deleteuser button" data-id=${element._id}>Delete</button>
                         </div>
                     </div>
                     `
@@ -347,22 +288,7 @@
                         $(this).parent().parent().find('p').find('input').removeClass('d-none')
                     })
                     $(".deleteuser").click(function () {
-                        var id = $(this).attr('data-id')
-                        $('.delete').click(function () {
-                            $.ajax({
-                                url: "/user/" + id,
-                                method: "DELETE",
-                                data: {
-                                    id: id
-                                }
-                            })
-                                .then((res) => {
-                                    window.location.href = "/"
-                                })
-                                .catch((err) => {
-                                    alert(err.message)
-                                })
-                        })
+                        alert("Bạn không phải admin")
                     })
                     $('.saveuser').click(function () {
                         $.ajax({
@@ -415,13 +341,7 @@
     }
     pageNumer()
     $('#addnew').click(function () {
-        $.ajax({
-            url: '/user',
-            method: "GET"
-        })
-            .then(() => {
-                window.location.href = "/addnew"
-            })
+        alert("Bạn không phải admin")
     })
     $('#logout').click(function () {
         $.ajax({

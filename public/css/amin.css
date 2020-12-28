@@ -24,6 +24,8 @@ html,body{
     line-height: 50px;
     font-size: 30px;
     color: white;
+    letter-spacing: 10px;
+    margin: 0;
 }
 .header_content ul{
     margin: 0 auto;
@@ -58,7 +60,7 @@ html,body{
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
-    flex-direction: space-between;
+    justify-content: flex-start;
 }
 .user{
     margin: 10px 10px;
@@ -71,10 +73,14 @@ h3{
     text-align: center;
 }
 .user p{
+    overflow-x: hidden;
+    width: 100%;
     margin: 10px 0;
     color: rgb(48, 35, 35);
 }
 .user span{
+    display: inline-block;
+    width: 65%;
     color: rgb(82, 104, 230);
 }
 .user input{
@@ -94,7 +100,7 @@ h3{
     margin: 0 auto;
     margin-top: 30px;
 }
-.select button{
+.button{
     width: 45%;
     height: 30px;
     border-radius: 15px;
@@ -106,4 +112,21 @@ h3{
     cursor: pointer;
     color: rgb(223, 30, 30);
     background-color: rgb(163, 192, 167);
+}
+.nav-page{
+    width: 50%;
+    margin: 50px auto 0px auto;
+}
+.nav-page ul{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+@media (max-width: 480px){
+    .header_content ul{
+        display: flex;
+        flex-wrap: wrap;
+        font-size: 14px;
+    }
 }

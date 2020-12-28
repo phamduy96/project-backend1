@@ -1,7 +1,5 @@
 const UserModel = require('../models/userModel');
-
 var UserServices = {};
-
 
 UserServices.signup = function(user){
     let {username, password, email} = user
@@ -18,7 +16,7 @@ UserServices.login = function(user){
         email: email
     })
 }
-UserServices.admin = function(){
+UserServices.getUser = function(){
     return UserModel.find({})
 }
 
@@ -37,10 +35,24 @@ UserServices.update = function(idParams,user){
         email: email
     })
 }
-
+UserServices.checkRole = function(id){
+    return UserModel.findOne({
+        _id: id
+    })
+}
 UserServices.checkEmail = function(email){
     return UserModel.findOne({
         email: email
+    })
+}
+UserServices.checkJWT = function(id){
+    return UserModel.findOne({
+        _id: id
+    })
+}
+UserServices.checkUsername = function(username){
+    return UserModel.findOne({
+        username
     })
 }
 module.exports = UserServices

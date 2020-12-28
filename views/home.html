@@ -19,7 +19,7 @@
         width: 100%;
         height: 100vh;
         background-image: url("img/CSS-Particles.gif");
-        background-size: contain;
+        background-size: cover;
     }
     .form{
         padding-top: 20px;
@@ -59,7 +59,7 @@
 <script>
     $("#signup").click(function(){
         $.ajax({
-            url: "/",
+            url: "/home",
             method: "GET",
             
         })
@@ -72,7 +72,7 @@
     });
     $("#login").click(function(){
         $.ajax({
-            url: "/",
+            url: "/home",
             method: "GET",
             
         })

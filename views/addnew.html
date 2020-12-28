@@ -38,7 +38,7 @@
 <script>
 	$('#btn').click(function(){
 		$.ajax({
-			url: 'user/addnew',
+			url: '/user/signup',
 			method: "POST",
 			data: {
 				username: $('#username').val(),
@@ -49,7 +49,7 @@
 		.then((res) => {
 			console.log(res);
 			alert(res.message);
-			window.location.href = '/admin'
+			window.location.href = '/'
 		})
 		.catch((err) => {
 			alert(err.responseJSON.message);

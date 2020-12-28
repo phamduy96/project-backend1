@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/amin.css">
+</head>
+
+<body>
+    <div class="header">
+        <div class="header_content">
+            <p class="text-header">A<span>D</span>M<span>I</span>N</p>
+            <ul>
+                <li id="addnew" style="opacity: 0;">Add New</li>
+                <li id="logout">Logout</li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <div id="users" class="users">
+        </div>
+        <div class="nav-page">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item" onclick="prePage()"><a class="page-link" href="#">Previous</a></li>
+                    <li>
+                        <ul id="page-number" class="pagination ">
+                        </ul>
+                    </li>
+                    <li class="page-item" onclick="nextPage()"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</body>
+
+<script>
+    var curentPage = 1;
+    const getPage = function (page) {
+        curentPage = page
+        $.ajax({
+            url: '/user?page=' + curentPage,
+            method: "GET"
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    $("#users").html("");
+                    for (let i = 0; i < res.data.length; i++) {
+                        let element = res.data[i]
+                        template = `
+                    <div class="user"> 
+                        <h3>User ${[i]} </h3>
+                        <p>
+                            ID: <span class="spanid">${element._id}</span>
+                            <input class="edit-id d-none" value="${element._id}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Username: <span>${element.username}</span>
+                            <input class="edit-username d-none" value="${element.username}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Password: <span>${element.password}</span>
+                            <input class="edit-password d-none" value="${element.password}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Email: <span>${element.email}</span>
+                            <input class="edit-email d-none" value="${element.email}"></input>
+                        </p>
+                    </div>
+                    `
+                        $("#users").append(template);
+                    }
+                }
+            })
+            .catch((err) => {
+                alert(err)
+            });
+    }
+    getPage(1)
+    const nextPage = function (page) {
+        curentPage++;
+        $.ajax({
+            url: '/user?page=' + curentPage,
+            method: "GET"
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    $("#users").html("");
+                    for (let i = 0; i < res.data.length; i++) {
+                        let element = res.data[i]
+                        template = `
+                    <div class="user"> 
+                        <h3>User ${[i]} </h3>
+                        <p>
+                            ID: <span class="spanid">${element._id}</span>
+                            <input class="edit-id d-none" value="${element._id}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Username: <span>${element.username}</span>
+                            <input class="edit-username d-none" value="${element.username}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Password: <span>${element.password}</span>
+                            <input class="edit-password d-none" value="${element.password}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Email: <span>${element.email}</span>
+                            <input class="edit-email d-none" value="${element.email}"></input>
+                        </p>
+                    </div>
+                    `
+                        $("#users").append(template);
+                    }
+                }
+            })
+            .catch((err) => {
+                alert(err.responseJSON.message)
+            });
+    }
+    const prePage = function (page) {
+        curentPage--;
+        if(curentPage < 1){
+            return getPage(1)
+        }
+        $.ajax({
+            url: '/user?page=' + curentPage,
+            method: "GET"
+        })
+            .then((res) => {
+                if (res.status === 200) {
+                    $("#users").html("");
+                    for (let i = 0; i < res.data.length; i++) {
+                        let element = res.data[i]
+                        template = `
+                    <div class="user"> 
+                        <h3>User ${[i]} </h3>
+                        <p>
+                            ID: <span class="spanid">${element._id}</span>
+                            <input class="edit-id d-none" value="${element._id}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Username: <span>${element.username}</span>
+                            <input class="edit-username d-none" value="${element.username}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Password: <span>${element.password}</span>
+                            <input class="edit-password d-none" value="${element.password}"></input>
+                        </p>
+                        <hr>
+                        <p>
+                            Email: <span>${element.email}</span>
+                            <input class="edit-email d-none" value="${element.email}"></input>
+                        </p>
+                    </div>
+                    `
+                        $("#users").append(template);
+                    }
+                    $('.edituser').click(function () {
+                        $(this).addClass('d-none')
+                        $(this).parent().find('.delete').addClass('d-none')
+                        $(this).parent().find('.canceluser').removeClass('d-none')
+                        $(this).parent().find('.saveuser').removeClass('d-none')
+                        $(this).parent().parent().find('p').find('span').addClass('d-none')
+                        $(this).parent().parent().find('p').find('input').removeClass('d-none')
+                    })
+                }
+            })
+            .catch((err) => {
+                alert(err.responseJSON.message)
+            });
+    }
+    var pageNumer = function () {
+        $.ajax({
+            url: "/user",
+            method: "GET"
+        })
+            .then((res) => {
+                for (let i = 1; i < res.total + 1; i++) {
+                    let li = `
+            <li class="page-item" onclick="getPage(${i})"><a class="page-link" href="#">${i}</a></li>
+            `
+                    $("#page-number").append(li)
+                }
+            })
+    }
+    pageNumer()
+    $('#logout').click(function () {
+        $.ajax({
+            url: '/user/logout',
+            method: "POST"
+        })
+            .then((res) => {
+                let token = getCookie(res.data)
+                setCookie("token", token, -7)
+                window.location.href = "/home"
+            })
+    })
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+</script>
+
+</html>
