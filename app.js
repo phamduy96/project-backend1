@@ -3,6 +3,8 @@ var express = require('express');
 var app = express();
 var cookieParser = require('cookie-parser')
 app.use(cookieParser())
+const cors = require("cors")
+app.use(cors())
 const path = require('path');
 var jwt = require('jsonwebtoken');
 app.use(express.static(path.join(__dirname, 'public')))

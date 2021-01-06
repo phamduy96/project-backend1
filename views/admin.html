@@ -83,18 +83,18 @@
                     <div class="user"> 
                         <h3>User ${[i]} </h3>
                         <p>
-                            ID: <span class="spanid">${element._id}</span>
-                            <input class="edit-id d-none" value="${element._id}"></input>
-                        </p>
-                        <hr>
-                        <p>
                             Username: <span>${element.username}</span>
                             <input class="edit-username d-none" value="${element.username}"></input>
                         </p>
                         <hr>
                         <p>
-                            Password: <span>${element.password}</span>
-                            <input class="edit-password d-none" value="${element.password}"></input>
+                            Password: <span>********</span>
+                            <input class="edit-password d-none"></input>
+                            <div class="btn-password d-none">
+                                <i style="font-size: 15px; margin-right: 5px">Update password</i>
+                                <button class="update-password" data-id=${element._id}>OK</button>
+                                <button class="cancel-password">Cancel</button>
+                            </div>
                         </p>
                         <hr>
                         <p>
@@ -118,6 +118,7 @@
                     }
                     $('.edituser').click(function () {
                         $(this).addClass('d-none')
+                        $(this).parent().parent().find('.btn-password').removeClass('d-none')
                         $(this).parent().find('.deleteuser').addClass('d-none')
                         $(this).parent().find('.canceluser').removeClass('d-none')
                         $(this).parent().find('.saveuser').removeClass('d-none')
@@ -142,13 +143,33 @@
                                 })
                         })
                     })
+                    $(".update-password").click(function(){
+                        console.log("vbn");
+                        $.ajax({
+                            url: '/user/password/' + $(this).attr('data-id'),
+                            method: "PUT",
+                            data: {
+                                _id: $(this).attr('data-id'),
+                                password: $(this).parent().parent().find('.edit-password').val()
+                            }
+                        })
+                        .then((data) => {
+                            alert("Cập nhật password thành công")
+                        })
+                        .catch((err) => {
+                            alert(err.responseJSON.message)
+                        })
+                    })
+                    $(".cancel-password").click(function(){
+                        html = $(this).parent().parent().find('.edit-password').val("")
+
+                    })
                     $('.saveuser').click(function () {
                         $.ajax({
                             url: '/user/' + $(this).attr('data-id'),
                             method: "PUT",
                             data: {
                                 username: $(this).parent().parent().find('.edit-username').val(),
-                                password: $(this).parent().parent().find('.edit-password').val(),
                                 email: $(this).parent().parent().find('.edit-email').val()
                             }
                         })
@@ -170,6 +191,8 @@
                         $(this).parent().find('.saveuser').addClass('d-none')
                         $(this).parent().parent().find('p').find('span').removeClass('d-none')
                         $(this).parent().parent().find('p').find('input').addClass('d-none')
+                        $(this).parent().parent().find('.btn-password').addClass('d-none')
+
                     })
                 }
             })
@@ -178,13 +201,13 @@
             });
     }
     getPage(1)
-    const nextPage = function (page) {
+    const nextPage = function () {
         curentPage++;
         $.ajax({
             url: '/user?page=' + curentPage,
             method: "GET"
         })
-            .then((res) => {
+        .then((res) => {
                 if (res.status === 200) {
                     $("#users").html("");
                     for (let i = 0; i < res.data.length; i++) {
@@ -193,18 +216,18 @@
                     <div class="user"> 
                         <h3>User ${[i]} </h3>
                         <p>
-                            ID: <span class="spanid">${element._id}</span>
-                            <input class="edit-id d-none" value="${element._id}"></input>
-                        </p>
-                        <hr>
-                        <p>
                             Username: <span>${element.username}</span>
                             <input class="edit-username d-none" value="${element.username}"></input>
                         </p>
                         <hr>
                         <p>
-                            Password: <span>${element.password}</span>
-                            <input class="edit-password d-none" value="${element.password}"></input>
+                            Password: <span>********</span>
+                            <input class="edit-password d-none"></input>
+                            <div class="btn-password d-none">
+                                <i style="font-size: 15px; margin-right: 5px">Update password</i>
+                                <button class="update-password" data-id=${element._id}>OK</button>
+                                <button class="cancel-password">Cancel</button>
+                            </div>
                         </p>
                         <hr>
                         <p>
@@ -228,7 +251,8 @@
                     }
                     $('.edituser').click(function () {
                         $(this).addClass('d-none')
-                        $(this).parent().find('.delete').addClass('d-none')
+                        $(this).parent().parent().find('.btn-password').removeClass('d-none')
+                        $(this).parent().find('.deleteuser').addClass('d-none')
                         $(this).parent().find('.canceluser').removeClass('d-none')
                         $(this).parent().find('.saveuser').removeClass('d-none')
                         $(this).parent().parent().find('p').find('span').addClass('d-none')
@@ -252,13 +276,33 @@
                                 })
                         })
                     })
+                    $(".update-password").click(function(){
+                        console.log("vbn");
+                        $.ajax({
+                            url: '/user/password/' + $(this).attr('data-id'),
+                            method: "PUT",
+                            data: {
+                                _id: $(this).attr('data-id'),
+                                password: $(this).parent().parent().find('.edit-password').val()
+                            }
+                        })
+                        .then((data) => {
+                            alert("Cập nhật password thành công")
+                        })
+                        .catch((err) => {
+                            alert(err.responseJSON.message)
+                        })
+                    })
+                    $(".cancel-password").click(function(){
+                        html = $(this).parent().parent().find('.edit-password').val("")
+
+                    })
                     $('.saveuser').click(function () {
                         $.ajax({
                             url: '/user/' + $(this).attr('data-id'),
                             method: "PUT",
                             data: {
                                 username: $(this).parent().parent().find('.edit-username').val(),
-                                password: $(this).parent().parent().find('.edit-password').val(),
                                 email: $(this).parent().parent().find('.edit-email').val()
                             }
                         })
@@ -275,19 +319,21 @@
                     })
                     $('.canceluser').click(function () {
                         $(this).addClass('d-none')
-                        $(this).parent().find('.delete').removeClass('d-none')
+                        $(this).parent().find('.deleteuser').removeClass('d-none')
                         $(this).parent().find('.edituser').removeClass('d-none')
                         $(this).parent().find('.saveuser').addClass('d-none')
                         $(this).parent().parent().find('p').find('span').removeClass('d-none')
                         $(this).parent().parent().find('p').find('input').addClass('d-none')
+                        $(this).parent().parent().find('.btn-password').addClass('d-none')
+
                     })
                 }
             })
             .catch((err) => {
-                alert(err.responseJSON.message)
+                alert(err)
             });
     }
-    const prePage = function (page) {
+    const prePage = function () {
         curentPage--;
         if(curentPage < 1){
             return getPage(1)
@@ -296,7 +342,7 @@
             url: '/user?page=' + curentPage,
             method: "GET"
         })
-            .then((res) => {
+        .then((res) => {
                 if (res.status === 200) {
                     $("#users").html("");
                     for (let i = 0; i < res.data.length; i++) {
@@ -305,18 +351,18 @@
                     <div class="user"> 
                         <h3>User ${[i]} </h3>
                         <p>
-                            ID: <span class="spanid">${element._id}</span>
-                            <input class="edit-id d-none" value="${element._id}"></input>
-                        </p>
-                        <hr>
-                        <p>
                             Username: <span>${element.username}</span>
                             <input class="edit-username d-none" value="${element.username}"></input>
                         </p>
                         <hr>
                         <p>
-                            Password: <span>${element.password}</span>
-                            <input class="edit-password d-none" value="${element.password}"></input>
+                            Password: <span>********</span>
+                            <input class="edit-password d-none"></input>
+                            <div class="btn-password d-none">
+                                <i style="font-size: 15px; margin-right: 5px">Update password</i>
+                                <button class="update-password" data-id=${element._id}>OK</button>
+                                <button class="cancel-password">Cancel</button>
+                            </div>
                         </p>
                         <hr>
                         <p>
@@ -340,7 +386,8 @@
                     }
                     $('.edituser').click(function () {
                         $(this).addClass('d-none')
-                        $(this).parent().find('.delete').addClass('d-none')
+                        $(this).parent().parent().find('.btn-password').removeClass('d-none')
+                        $(this).parent().find('.deleteuser').addClass('d-none')
                         $(this).parent().find('.canceluser').removeClass('d-none')
                         $(this).parent().find('.saveuser').removeClass('d-none')
                         $(this).parent().parent().find('p').find('span').addClass('d-none')
@@ -364,13 +411,33 @@
                                 })
                         })
                     })
+                    $(".update-password").click(function(){
+                        console.log("vbn");
+                        $.ajax({
+                            url: '/user/password/' + $(this).attr('data-id'),
+                            method: "PUT",
+                            data: {
+                                _id: $(this).attr('data-id'),
+                                password: $(this).parent().parent().find('.edit-password').val()
+                            }
+                        })
+                        .then((data) => {
+                            alert("Cập nhật password thành công")
+                        })
+                        .catch((err) => {
+                            alert(err.responseJSON.message)
+                        })
+                    })
+                    $(".cancel-password").click(function(){
+                        html = $(this).parent().parent().find('.edit-password').val("")
+
+                    })
                     $('.saveuser').click(function () {
                         $.ajax({
                             url: '/user/' + $(this).attr('data-id'),
                             method: "PUT",
                             data: {
                                 username: $(this).parent().parent().find('.edit-username').val(),
-                                password: $(this).parent().parent().find('.edit-password').val(),
                                 email: $(this).parent().parent().find('.edit-email').val()
                             }
                         })
@@ -387,16 +454,18 @@
                     })
                     $('.canceluser').click(function () {
                         $(this).addClass('d-none')
-                        $(this).parent().find('.delete').removeClass('d-none')
+                        $(this).parent().find('.deleteuser').removeClass('d-none')
                         $(this).parent().find('.edituser').removeClass('d-none')
                         $(this).parent().find('.saveuser').addClass('d-none')
                         $(this).parent().parent().find('p').find('span').removeClass('d-none')
                         $(this).parent().parent().find('p').find('input').addClass('d-none')
+                        $(this).parent().parent().find('.btn-password').addClass('d-none')
+
                     })
                 }
             })
             .catch((err) => {
-                alert(err.responseJSON.message)
+                alert(err)
             });
     }
     var pageNumer = function () {
@@ -407,8 +476,8 @@
             .then((res) => {
                 for (let i = 1; i < res.total + 1; i++) {
                     let li = `
-            <li class="page-item" onclick="getPage(${i})"><a class="page-link" href="#">${i}</a></li>
-            `
+                    <li class="page-item"><a class="page-link" onclick="getPage(${i})" href="?page=${i}">${i}</a></li>
+                    `
                     $("#page-number").append(li)
                 }
             })
@@ -429,8 +498,7 @@
             method: "POST"
         })
             .then((res) => {
-                let token = getCookie(res.data)
-                setCookie("token", token, -7)
+                setCookie("token", res.token, -7)
                 window.location.href = "/home"
             })
     })
@@ -456,5 +524,5 @@
         return "";
     }
 </script>
-
+  
 </html>

@@ -26,13 +26,19 @@ UserServices.deleteUser = function(id){
     })
 }
 UserServices.update = function(idParams,user){
-    let {username, password, email} = user
+    let {username, email} = user
     return UserModel.updateOne({
         _id: idParams
     },{
         username: username,
-        password: password,
         email: email
+    })
+}
+UserServices.updatePassword = function(id, password){
+    return UserModel.updateOne({
+        _id: id
+    },{
+        password: password
     })
 }
 UserServices.checkRole = function(id){

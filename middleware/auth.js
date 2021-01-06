@@ -1,5 +1,4 @@
 const UserServices = require('../services/userServices');
-var jwt = require("jsonwebtoken")
 const jwtHelp = require("../util/jwtHelps");
 var auth = {};
 auth.checkLogin = async function (req, res, next) {
@@ -13,7 +12,10 @@ auth.checkLogin = async function (req, res, next) {
             req.locals = result;
             next()
           } else {
-            return res.json("sai tài khoản hoặc mật khẩu")
+            return res.status(400).json({
+              status: 400,
+              message: "sai tài khoản hoặc mật khẩu"
+            })
           }
         })
         .catch((err) => {
