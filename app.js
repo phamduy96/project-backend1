@@ -13,8 +13,13 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 var Userrouter = require('./routers/user')
 var Indexrouter = require('./routers/index')
+var Blogrouter = require('./routers/blog')
+var Commentrouter = require('./routers/comment')
+
 
 app.use('/user', Userrouter)
+app.use('/blog',Blogrouter)
+app.use('/comment', Commentrouter)
 app.use('/', Indexrouter)
 
 app.listen(process.env.PORT, function(){

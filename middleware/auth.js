@@ -3,28 +3,20 @@ const jwtHelp = require("../util/jwtHelps");
 var auth = {};
 auth.checkLogin = async function (req, res, next) {
   try {
+    if(req.cookies.token || req.body.token){
+      
+    }
     let token = req.cookies.token
+    console.log(token);
     let data = await jwtHelp.verifyJWT(token, process.env.SECRET)
+    console.log(data);
     if (data) {
-      UserServices.checkJWT(data.id)
-        .then((result) => {
-          if (result) {
-            req.locals = result;
-            next()
-          } else {
-            return res.status(400).json({
-              status: 400,
-              message: "sai tài khoản hoặc mật khẩu"
-            })
-          }
-        })
-        .catch((err) => {
-          return res.status(500).json({
-            status: 500,
-            message: "lỗi server"
-          })
-        })
-    } else {
+      let result = UserServices.checkJWT(data.id)
+      if(result){
+        req.locals = result;
+          next()
+      }
+    }else {
       return res.status(400).json({
         status: 400,
         message: "sai mã token"
