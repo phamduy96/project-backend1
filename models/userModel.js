@@ -5,14 +5,12 @@ var userSchma = new Schema({
     username: String,
     password: String,
     email: String,
+    phone: String,
     role: {
         type: String,
         default: 'user'
     },
-    avatar: {
-        type: String,
-        default: "/public/img/CSS-Particles.gif"
-    },
+    avatar: String,
     idComment: {
         type: String,
         ref: 'comment'

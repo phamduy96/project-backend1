@@ -128,7 +128,6 @@ router.post("/signup", async (req, res) => {
                     return res.status(200).json({
                         status: 200,
                         message: "Đăng kí thành công",
-                        data: result
                     })
                 }
                 return res.status(500).json({
@@ -147,7 +146,7 @@ router.post("/signup", async (req, res) => {
 })
 router.post("/login", async (req, res) => {
     try {
-        var user = await UserServices.checkEmail(req.body.email);
+        const user = await UserServices.checkEmail(req.body.email);
         if (user) {
             bcrypt.compare(req.body.password, user.password, async function (err, result) {
                 if (!result || err) {
@@ -157,10 +156,12 @@ router.post("/login", async (req, res) => {
                     })
                 }
                 var token = await jwtHelp.generrateJWT({ id: user._id }, process.env.SECRET, '7d')
+                user.password = undefined;
                 return res.status(200).json({
                     status: 200,
                     message: "Đăng nhập thành công",
-                    data: token
+                    token: token,
+                    user: user
                 })
             })
         } else {
@@ -190,6 +191,60 @@ router.delete("/:id", async (req, res) => {
         return res.status(500).json({
             status: 500,
             message: "Không thể kết nối đến server",
+            data: error
+        })
+    }
+})
+router.put("/avatar/:id", async (req, res)=>{
+    try {
+        let idParam = req.params.id;
+        let urlAvatar = req.body.urlAvatar
+        let data = await UserServices.updateAvatar(idParam, urlAvatar)
+        if(data){
+            return res.status(200).json({
+                status: 200,
+                message: "Cập nhật thành công",
+                data: data
+            })
+        }
+        return res.status(400).json({
+            status: 400,
+            message: "Sai thông tin id"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            message: "Không thể kết nối với server",
+            data: error
+        })
+    }
+})
+router.put("/phone/:id", async (req, res)=>{
+    try {
+        let idParam = req.params.id;
+        let phone = req.body.phone
+        if(phone.length < 9 || Number.isNaN(phone) == true){
+            return res.status(400).json({
+                status: 400,
+                message: "Không đúng định dạng phone number",
+            })
+        }
+        let data = await UserServices.updatePhone(idParam, phone)
+        if(data){
+            return res.status(200).json({
+                status: 200,
+                message: "Cập nhật thành công",
+                data: data
+            })
+        }
+        return res.status(400).json({
+            status: 400,
+            message: "Sai thông tin id"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            message: "Không thể kết nối với server",
             data: error
         })
     }
