@@ -13,4 +13,5 @@ BlogServices.addBlog = function (blog) {
         image: image,
     })
 }
+
 module.exports = BlogServices
