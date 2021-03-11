@@ -13,5 +13,21 @@ BlogServices.addBlog = function (blog) {
         image: image,
     })
 }
-
+BlogServices.upDateIdComment = function (idBlog, idComment) {
+    return BlogModel.updateOne({
+        _id: idBlog
+    },{
+        $push: {idComment: idComment}
+    })
+}
+BlogServices.getComments = function(idBlog){
+    return BlogModel.find({
+        _id: idBlog
+    }).populate(
+        "idComment"
+    ).populate({
+        path: "idComment",
+        populate: {path: "idUser"}
+    })
+}
 module.exports = BlogServices

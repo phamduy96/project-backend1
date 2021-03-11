@@ -6,14 +6,13 @@ var blogSchma = new Schema({
     introduceImg: String,
     content: String,
     image: String,
-    idComment: {
-        type: String,
-        ref: 'comment'
-    },
-    idUser: {
-        type: String,
-        ref: 'user'
-    }
+    idComment: [
+        {
+            type: String,
+            ref: 'comment'
+        },
+    ]
+
 },{
     collection: 'blog'
 });

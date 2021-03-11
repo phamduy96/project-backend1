@@ -3,9 +3,14 @@ const Schema = mongoose.Schema;
 
 
 var commentSchma = new Schema({
-    content: String
+    content: String,
+    idUser: {
+        type: String,
+        ref: 'user'
+    }  
 },{
-    collection: 'comment'
+    collection: 'comment',
+    
 });
 
 const CommentModel = mongoose.model("comment", commentSchma)

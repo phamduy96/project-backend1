@@ -10,11 +10,7 @@ var userSchma = new Schema({
         type: String,
         default: 'user'
     },
-    avatar: String,
-    idComment: {
-        type: String,
-        ref: 'comment'
-    }
+    avatar: String
 },{
     collection: 'user'
 });
