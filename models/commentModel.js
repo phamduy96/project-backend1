@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 var commentSchma = new Schema({
     content: String,
+    createAt: Number,
     idUser: {
         type: String,
         ref: 'user'

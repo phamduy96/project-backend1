@@ -195,12 +195,12 @@ router.delete("/:id", async (req, res) => {
         })
     }
 })
-router.put("/avatar/:id", async (req, res)=>{
+router.put("/avatar/:id", async (req, res) => {
     try {
         let idParam = req.params.id;
         let urlAvatar = req.body.urlAvatar
         let data = await UserServices.updateAvatar(idParam, urlAvatar)
-        if(data){
+        if (data) {
             return res.status(200).json({
                 status: 200,
                 message: "Cập nhật thành công",
@@ -219,18 +219,18 @@ router.put("/avatar/:id", async (req, res)=>{
         })
     }
 })
-router.put("/phone/:id", async (req, res)=>{
+router.put("/phone/:id", async (req, res) => {
     try {
         let idParam = req.params.id;
         let phone = req.body.phone
-        if(phone.length < 9 || Number.isNaN(phone) == true){
+        if (phone.length < 9 || Number.isNaN(phone) == true) {
             return res.status(400).json({
                 status: 400,
                 message: "Không đúng định dạng phone number",
             })
         }
         let data = await UserServices.updatePhone(idParam, phone)
-        if(data){
+        if (data) {
             return res.status(200).json({
                 status: 200,
                 message: "Cập nhật thành công",
@@ -329,8 +329,30 @@ router.post("/logout", (req, res) => {
     })
 })
 router.post('/checkJwt', async (req, res) => {
-    token = req.headers.authorization.token
+    token = req.body.token
     console.log(token);
+    try {
+        let data = await jwtHelp.verifyJWT(token, process.env.SECRET)
+        if (data) {
+            console.log(data);
+            let result = await UserServices.checkJWT(data.id)
+            if (result) {
+                return res.status(200).json({
+                    status: 200,
+                    message: "Check JWT thanh cong"
+                })
+            }
+            return res.status(400).json({
+                status: 400,
+                message: "Sai ma token"
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({
+            status: 500,
+            message: "khong the ket noi server"
+        })
+    }
 })
 
 module.exports = router

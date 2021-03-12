@@ -6,7 +6,8 @@ router.post("/", async (req, res)=>{
         let idBlog = req.body.idBlog;
         let idUser = req.body.idUser;
         let content = req.body.content
-        let data = await CommentServices.addComment(idUser, content);
+        let time = req.body.createAt;
+        let data = await CommentServices.addComment(idUser, content, time);
         if(data){
             let idComment = data._id
             let result = await BlogServices.upDateIdComment(idBlog, idComment)
@@ -26,6 +27,7 @@ router.post("/", async (req, res)=>{
             status: 400,
             message: "Sai thông tin content"
         })
+        
     } catch (error) {
         return res.status(500).json({
             status: 500,
