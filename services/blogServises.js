@@ -3,14 +3,27 @@ var BlogServices = {}
 
 BlogServices.getBlog = function(){
     return BlogModel.find({})
+    .populate(
+        "idComment"
+    )
+}
+BlogServices.getBlogSelect = function(category){
+    return BlogModel.find({
+        category: category
+    })
+    .populate(
+        "idComment"
+    )
 }
 BlogServices.addBlog = function (blog) {
-    let { title, introduceImg, content, image } = blog
+    let { title, introduceImg, content, image, imagedetail, category } = blog
     return BlogModel.create({
         title: title,
         introduceImg: introduceImg,
         content: content,
         image: image,
+        imagedetail: imagedetail,
+        category: category
     })
 }
 BlogServices.upDateIdComment = function (idBlog, idComment) {

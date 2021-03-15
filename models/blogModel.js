@@ -6,6 +6,8 @@ var blogSchma = new Schema({
     introduceImg: String,
     content: String,
     image: String,
+    imagedetail: String,
+    category: String,
     idComment: [
         {
             type: String,
