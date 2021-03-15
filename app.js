@@ -27,6 +27,6 @@ app.use('/detail-blog',DetailBlog )
 app.use('/module', Module)
 app.use('/', Indexrouter)
 
-app.listen(process.env.PORT, function(){
+app.listen(process.env.PORT || 3001, function(){
     console.log('success');
 })
