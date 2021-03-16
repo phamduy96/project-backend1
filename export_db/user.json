@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "6010d0739fafdc16640f5045"
+  },
+  "role": "user",
+  "username": "anh",
+  "password": "$2b$10$00mBSVZSgoErXgrciIGG0.mYmI9swbVIUaHYgEhAsQBmdlEx7J/DC",
+  "email": "abc@",
+  "__v": 0,
+  "avatar": "A",
+  "phone": "0949418096"
+},{
+  "_id": {
+    "$oid": "603df4d8ced91806881f60d0"
+  },
+  "role": "admin",
+  "avatar": "http://localhost:3001/uploads/file-1615890163036.jpg",
+  "username": "duy",
+  "password": "$2b$10$DBZM/6cpGZCQlkhFiVpVBuKa/LqmcLCqZShEdxX766Q0/wzWa7gpa",
+  "email": "hghh@",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "604770fbee98732298d33575"
+  },
+  "role": "user",
+  "username": "ccc",
+  "password": "$2b$10$nhbu1oElwTAB26UmyLYZ9euwfXcbn66/CDyUMN28peE2ksbF1yHxm",
+  "email": "ccc@",
+  "__v": 0,
+  "avatar": "https://i0.wp.com/s1.uphinh.org/2021/03/11/images-1.jpg"
+}]
